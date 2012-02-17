@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="10dp" 
+    android:gravity="top">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#f1f1f1" 
+        >
+        
+            <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logocabecario" />
+    </LinearLayout>
+
+        <LinearLayout
+        android:padding="5dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#f1f1f1">
+    
+
+		
+		        <TextView
+		            android:id="@+id/textView2"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="Matrícula:"
+		            android:textAppearance="?android:attr/textAppearanceLarge"  android:textColor="#616161" android:textStyle="bold"   android:gravity="left" />
+		
+		        <EditText
+		            android:id="@+id/editText1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content" android:text="0711808">
+		            
+		        </EditText>
+		       
+
+		    
+
+		     <TextView
+		            android:id="@+id/textView1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="Senha:"
+		            android:textAppearance="?android:attr/textAppearanceLarge" android:textColor="#616161" android:textStyle="bold"  android:gravity="left" />
+		
+		     <EditText
+		         android:id="@+id/editText2"
+		         android:layout_width="match_parent"
+		         android:layout_height="wrap_content"
+		         android:inputType="textPassword" android:text="180753"/>
+		    
+	 <Button android:id="@+id/buttonEntrar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Entrar" />
+	</LinearLayout>
+
+
+
+</LinearLayout>

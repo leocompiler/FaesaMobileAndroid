@@ -1,43 +1,61 @@
 package com.github.faesamobileandroid;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.github.faesamobileandroid.view.MenuPrincipal;
 
 public class FaesaMobileAndroidActivity extends Activity {
-    /** Called when the activity is first created. */
+
+	private ControllerPrincipal controller ;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        String url = "http://aluno.faesa.br/sistema/NotasFaltas/Default.aspx";
-       // String url = "http://www.terra.com.br";
-        String buffer;
-		try {
-			buffer = RequestServer.requisitarDadosHttpGet(url);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			buffer = e.toString();
-		}
-		int start = buffer.indexOf(" <div id=\"ctl00_ContentPlaceHolder1_UpdatePanel1\">"); 
-		int end = buffer.indexOf("<!-- FIM - MIOLO-->");
-		String resp = "<html>"+buffer.substring(start, end)+"</html>";
-		//resp = resp.replace("#", "%23");
-		resp = resp.replace("%", "%25");
-		resp = resp.replace("\\", "%27");
-		resp = resp.replace("?", "%3f");
-		
-        WebView web = (WebView)findViewById(R.id.webView1);
-        
-        web.loadData(resp, "text/html","UTF-8");
-        
+        setContentView(R.layout.autenticacao);
+
+        controller = new ControllerPrincipal();
+        controller.initSessao();
+    
+        Button button = (Button)findViewById(R.id.buttonEntrar);
+        button.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EditText matriculaTextView = (EditText)findViewById(R.id.editText1);
+				EditText senhaTextView = (EditText)findViewById(R.id.editText2);
+				
+				controller.autenticacao(matriculaTextView.getText().toString(),senhaTextView.getText().toString());
+				
+			}
+		});
         
     }
+    
+    
+    public void popUpMensagemRetornoController(String msg){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setTitle("Aviso!")
+		   .setMessage(msg)
+		   .setCancelable(false)
+		   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			   public void onClick(DialogInterface dialog, int id) {
+			    	
+			   }
+		   });
+		 AlertDialog alertDialog = builder.create();
+		alertDialog.show();	
+    }
+    
+	public void autorizacaoAprovado(){
+		startActivity(new Intent(this,MenuPrincipal.class));
+	}
     
      
     
