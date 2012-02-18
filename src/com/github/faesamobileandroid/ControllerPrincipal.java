@@ -2,13 +2,14 @@ package com.github.faesamobileandroid;
 
 import com.github.faesamobileandroid.data.Estudante;
 import com.github.faesamobileandroid.data.ServiceFaesaOnline;
+import com.github.faesamobileandroid.data.Sessao;
 
 public class ControllerPrincipal {
 	
 	
 	private static ServiceFaesaOnline service ;
 	private static Estudante estudante  = new Estudante(); ;
-	
+	private static Sessao sessaoEstudante  = new Sessao();
 	public ControllerPrincipal(){
 		service = new ServiceFaesaOnline();
 		
@@ -16,7 +17,7 @@ public class ControllerPrincipal {
 	
 	public void initSessao(){
 		try {
-			estudante.setCookie(service.sessionFaesaOnline());
+			sessaoEstudante = service.sessionFaesaOnline();
 		} catch (Exception e) {
 
 			e.printStackTrace();

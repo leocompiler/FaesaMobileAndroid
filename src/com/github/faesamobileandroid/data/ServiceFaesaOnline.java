@@ -15,12 +15,31 @@ import com.github.faesamobileandroid.RequestServer;
 public class ServiceFaesaOnline {
 	
 	 
-	public String  sessionFaesaOnline() throws Exception{
+	public Sessao  sessionFaesaOnline() throws Exception{
 		String url = "http://aluno.faesa.br/Login.aspx?ReturnUrl=%2fDefault.aspx";
-		String buffer = RequestServer.requistarSessao(url);
+		String stringCookie = RequestServer.requistarSessao(url);
 		String url2 = "http://aluno.faesa.br/Login.aspx?ReturnUrl=%2flogoff.aspx";
-		RequestServer.requisitarDadosHttpGet(url2, buffer);
-		return buffer ;
+		String buffer = RequestServer.requisitarDadosHttpGet(url2, stringCookie);
+		
+		Sessao sessao = new Sessao();
+        
+		String stringVarsSessao;
+ 
+		
+		int start = buffer.indexOf("EVENTVALIDATION\" value=\"");
+		String  tmp = buffer.substring(start+24);
+		int end = tmp.indexOf("\" />"); 
+		sessao.set__EVENTVALIDATION(tmp.substring(0,end));
+		
+		String eventValidation = buffer.substring(start, end);
+		
+		
+		//int start = buffer.indexOf("id=\"__VIEWSTATE\" value=\""); 
+		//int end = buffer.indexOf("\" />\r\n")
+		
+		String resp = "<html>"+buffer.substring(start, end)+"</html>";
+		
+		return sessao ;
 		
 	}
 	public RespostaAutenticacao autenticarFaesaOnline(Estudante estudante ){
@@ -34,14 +53,13 @@ public class ServiceFaesaOnline {
         listaAtributos.add(new BasicNameValuePair("__LASTFOCUS", ""));
         listaAtributos.add(new BasicNameValuePair("__EVENTTARGET", ""));
         listaAtributos.add(new BasicNameValuePair("__EVENTARGUMENT", ""));
-        listaAtributos.add(new BasicNameValuePair("__EVENTVALIDATION", "/wEWBQKSjZ3jBQKUvNa1DwKnz4ybCAL666vYDALM9PumD6ZjBaEYN4tpSzLinGUYzbrtbzWK"));
-        listaAtributos.add(new BasicNameValuePair("__VIEWSTATE", "/wEPDwUKMTgwNDgxNzMwNA9kFgICAQ8WAh4MYXV0b2NvbXBsZXRlBQNvZmYWBAIBD2QWAmYPZBYEAgcPD2QWAh4Jb25LZXlEb3duBRVyZXR1cm4gTnVtZXJvKGV2ZW50KTtkAg0PD2QWAh8BBR5yZXR1cm4gTnVtZXJvTWF0cmljdWxhKGV2ZW50KTtkAgcPFgIeB1Zpc2libGVoZGTOgjAitWTj95AGnZgoPJpkF/5C4w=="));
-        
+        listaAtributos.add(new BasicNameValuePair("__VIEWSTATE", "%2FwEPDwUKMTgwNDgxNzMwNA9kFgICAQ8WAh4MYXV0b2NvbXBsZXRlBQNvZmYWBAIBDzwrAAoBAA8WAh4IVXNlck5hbWUFBzA3MTE4MDhkFgJmD2QWBAIHDw8WAh4EVGV4dAUHMDcxMTgwOBYCHglvbktleURvd24FFXJldHVybiBOdW1lcm8oZXZlbnQpO2QCDQ8PZBYCHwMFHnJldHVybiBOdW1lcm9NYXRyaWN1bGEoZXZlbnQpO2QCBw8WAh4HVmlzaWJsZWhkZDn%2BU6DoCgLnZS6tifnfjth84nQT"));
+        listaAtributos.add(new BasicNameValuePair("__EVENTVALIDATION", "%2FwEWBQKmjbmdCwKUvNa1DwKnz4ybCAL666vYDALM9PumD1dbWeA1zvxK40zQVTq%2FT3lR9P%2FX"));        
         listaAtributos.add(new BasicNameValuePair("Login1$UserName", estudante.getMatricula()));
         listaAtributos.add(new BasicNameValuePair("Login1$LoginButton", "ENTRAR"));
         listaAtributos.add(new BasicNameValuePair("Login1$Password", estudante.getSenha()));
       
-		String retorno = RequestServer.requisitarDadosHttpPost(url, listaAtributos , estudante.getCookie());
+		String retorno = RequestServer.requisitarDadosHttpPost(url, listaAtributos , estudante.getSessao().getCookie());
 		
 		int iComp = retorno.compareTo("<h2>Object moved to <a href=\"%2fSistema%2fDefault.aspx\">here</a>.</h2>\r\n");
 		

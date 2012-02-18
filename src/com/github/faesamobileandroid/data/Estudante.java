@@ -6,8 +6,8 @@ public class Estudante {
 	private String senha ;
 	private String nome ;
 	private String cursoAtual ;
+	private Sessao sessao ;
 	
-	private String cookie ;
 
 	public String getMatricula() {
 		return matricula;
@@ -41,12 +41,12 @@ public class Estudante {
 		this.cursoAtual = cursoAtual;
 	}
 
-	public String getCookie() {
-		return cookie;
+	public Sessao getSessao() {
+		return sessao;
 	}
 
-	public void setCookie(String cookie) {
-		this.cookie = cookie;
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
 	}
 	
 }
