@@ -14,6 +14,13 @@ import com.github.faesamobileandroid.RequestServer;
 
 public class ServiceFaesaOnline {
 	
+	private String capturarString(String buffer ,String inicio , String fim ){
+		int start = buffer.indexOf(inicio);
+		String  tmp = buffer.substring(start+inicio.length());
+		int end = tmp.indexOf(fim); 
+		return tmp.substring(0,end);
+		
+	}
 	 
 	public Sessao  sessionFaesaOnline() throws Exception{
 		String url = "http://aluno.faesa.br/Login.aspx?ReturnUrl=%2fDefault.aspx";
@@ -22,23 +29,10 @@ public class ServiceFaesaOnline {
 		String buffer = RequestServer.requisitarDadosHttpGet(url2, stringCookie);
 		
 		Sessao sessao = new Sessao();
-        
-		String stringVarsSessao;
  
-		
-		int start = buffer.indexOf("EVENTVALIDATION\" value=\"");
-		String  tmp = buffer.substring(start+24);
-		int end = tmp.indexOf("\" />"); 
-		sessao.set__EVENTVALIDATION(tmp.substring(0,end));
-		
-		String eventValidation = buffer.substring(start, end);
-		
-		
-		//int start = buffer.indexOf("id=\"__VIEWSTATE\" value=\""); 
-		//int end = buffer.indexOf("\" />\r\n")
-		
-		String resp = "<html>"+buffer.substring(start, end)+"</html>";
-		
+		sessao.set__EVENTVALIDATION(capturarString(buffer, "EVENTVALIDATION\" value=\"", "\" />"));
+		sessao.set__VIEWSTATE(capturarString(buffer, "id=\"__VIEWSTATE\" value=\"", "\" />"));
+		sessao.setCookie(stringCookie);
 		return sessao ;
 		
 	}
@@ -53,8 +47,8 @@ public class ServiceFaesaOnline {
         listaAtributos.add(new BasicNameValuePair("__LASTFOCUS", ""));
         listaAtributos.add(new BasicNameValuePair("__EVENTTARGET", ""));
         listaAtributos.add(new BasicNameValuePair("__EVENTARGUMENT", ""));
-        listaAtributos.add(new BasicNameValuePair("__VIEWSTATE", "%2FwEPDwUKMTgwNDgxNzMwNA9kFgICAQ8WAh4MYXV0b2NvbXBsZXRlBQNvZmYWBAIBDzwrAAoBAA8WAh4IVXNlck5hbWUFBzA3MTE4MDhkFgJmD2QWBAIHDw8WAh4EVGV4dAUHMDcxMTgwOBYCHglvbktleURvd24FFXJldHVybiBOdW1lcm8oZXZlbnQpO2QCDQ8PZBYCHwMFHnJldHVybiBOdW1lcm9NYXRyaWN1bGEoZXZlbnQpO2QCBw8WAh4HVmlzaWJsZWhkZDn%2BU6DoCgLnZS6tifnfjth84nQT"));
-        listaAtributos.add(new BasicNameValuePair("__EVENTVALIDATION", "%2FwEWBQKmjbmdCwKUvNa1DwKnz4ybCAL666vYDALM9PumD1dbWeA1zvxK40zQVTq%2FT3lR9P%2FX"));        
+        listaAtributos.add(new BasicNameValuePair("__VIEWSTATE", estudante.getSessao().get__VIEWSTATE()));
+        listaAtributos.add(new BasicNameValuePair("__EVENTVALIDATION", estudante.getSessao().get__EVENTVALIDATION()));        
         listaAtributos.add(new BasicNameValuePair("Login1$UserName", estudante.getMatricula()));
         listaAtributos.add(new BasicNameValuePair("Login1$LoginButton", "ENTRAR"));
         listaAtributos.add(new BasicNameValuePair("Login1$Password", estudante.getSenha()));

@@ -18,6 +18,7 @@ public class ControllerPrincipal {
 	public void initSessao(){
 		try {
 			sessaoEstudante = service.sessionFaesaOnline();
+			estudante.setSessao(sessaoEstudante);
 		} catch (Exception e) {
 
 			e.printStackTrace();
