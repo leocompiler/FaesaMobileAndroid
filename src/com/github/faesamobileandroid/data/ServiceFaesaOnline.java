@@ -55,39 +55,80 @@ public class ServiceFaesaOnline {
       
 		String retorno = RequestServer.requisitarDadosHttpPost(url, listaAtributos , estudante.getSessao().getCookie());
 		
-		int iComp = retorno.compareTo("<h2>Object moved to <a href=\"%2fSistema%2fDefault.aspx\">here</a>.</h2>\r\n");
+		//int iComp = retorno.compareTo("<h2>Object moved to <a href=\"%2fSistema%2fDefault.aspx\">here</a>.</h2>\r\n");
 		
 		
 		return null ;
 		
 	}
 	
-	public void notasFaltasFaesaOnline(Estudante estudante ){
-        String url = "http://aluno.faesa.br/sistema/NotasFaltas/Default.aspx";
-        String buffer;
-		try {
-			buffer = RequestServer.requisitarDadosHttpGet(url);
-		} catch (Exception e) {
-			buffer = e.toString();
-		}
+	public RespostaMateriasNotasFaltas materiasNotasFaltasFaesaOnline(Estudante estudante ) throws Exception{
+//        String url = "http://aluno.faesa.br/sistema/NotasFaltas/Default.aspx";
+//        String buffer;
+//		try {
+//			buffer = RequestServer.requisitarDadosHttpGet(url);
+//		} catch (Exception e) {
+//			buffer = e.toString();
+//		}
+//		
+//		int start = buffer.indexOf(" <div id=\"ctl00_ContentPlaceHolder1_UpdatePanel1\">"); 
+//		int end = buffer.indexOf("<!-- FIM - MIOLO-->");
+//		
+//		
+//		String resp = "<html>"+buffer.substring(start, end)+"</html>";
+//		//resp = resp.replace("#", "%23");
+//		resp = resp.replace("%", "%25");
+//		resp = resp.replace("\\", "%27");
+//		resp = resp.replace("?", "%3f");
 		
-		int start = buffer.indexOf(" <div id=\"ctl00_ContentPlaceHolder1_UpdatePanel1\">"); 
-		int end = buffer.indexOf("<!-- FIM - MIOLO-->");
-		
-		
-		String resp = "<html>"+buffer.substring(start, end)+"</html>";
-		//resp = resp.replace("#", "%23");
-		resp = resp.replace("%", "%25");
-		resp = resp.replace("\\", "%27");
-		resp = resp.replace("?", "%3f");
-		
+		//TODO : SERVICE TESTE AINDA ...
         
+        List<Materia> listMateria = new ArrayList<Materia>();
+        listMateria.add(new Materia());
+        listMateria.add(new Materia());
+        listMateria.add(new Materia());
+        listMateria.add(new Materia());
         
+        listMateria.get(0).setNome("Fisica 2");
+        listMateria.get(1).setNome("Engenharia Software");
+        listMateria.get(2).setNome("Sistema Distribuidos");
+        listMateria.get(3).setNome("Organização Métodos Sistemas");
+        
+        List<String> notas = new ArrayList<String>();
+        
+        notas.add("5.4");
+        notas.add("6");
+        notas.add("3");
+        notas.add("10");
+        
+        listMateria.get(0).setNota(notas);
+        listMateria.get(1).setNota(notas);
+        listMateria.get(2).setNota(notas);
+        listMateria.get(3).setNota(notas);
+        
+        listMateria.get(0).setQuantFaltas(18);
+        listMateria.get(1).setQuantFaltas(18);
+        listMateria.get(2).setQuantFaltas(18);
+        listMateria.get(3).setQuantFaltas(7);
+        
+        listMateria.get(0).setQuantFaltasOcorridas(2);
+        listMateria.get(1).setQuantFaltasOcorridas(6);
+        listMateria.get(2).setQuantFaltasOcorridas(8);
+        listMateria.get(3).setQuantFaltasOcorridas(2);
+        
+        RespostaMateriasNotasFaltas resposta = new RespostaMateriasNotasFaltas();
+        
+        resposta.setMsg("OK");
+        resposta.setListMateria(listMateria);
+        
+        return resposta;
 	}
 	
 	public void historicoEscolarFaesaOnline(Estudante estudante ){
 		
 	}
 	
-
+	public void boletosBancariosCursoFaesa(Estudante estudante){
+		
+	}
 }
