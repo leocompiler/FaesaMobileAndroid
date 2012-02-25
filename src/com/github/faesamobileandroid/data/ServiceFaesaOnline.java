@@ -6,9 +6,6 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.webkit.WebView;
-
-import com.github.faesamobileandroid.R;
 import com.github.faesamobileandroid.RequestServer;
 
 
@@ -36,7 +33,7 @@ public class ServiceFaesaOnline {
 		return sessao ;
 		
 	}
-	public RespostaAutenticacao autenticarFaesaOnline(Estudante estudante ){
+	public RespostaAutenticacao autenticarFaesaOnline(Estudante estudante ) throws Exception{
 		
 		
 					  
@@ -53,12 +50,33 @@ public class ServiceFaesaOnline {
         listaAtributos.add(new BasicNameValuePair("Login1$LoginButton", "ENTRAR"));
         listaAtributos.add(new BasicNameValuePair("Login1$Password", estudante.getSenha()));
       
-		String retorno = RequestServer.requisitarDadosHttpPost(url, listaAtributos , estudante.getSessao().getCookie());
+		RespostaRequestPost retorno = RequestServer.requisitarDadosHttpPost(url, listaAtributos , estudante.getSessao().getCookie());
 		
-		//int iComp = retorno.compareTo("<h2>Object moved to <a href=\"%2fSistema%2fDefault.aspx\">here</a>.</h2>\r\n");
+		String novoCookie = estudante.getSessao().getCookie()+retorno.getRetornoCookie();
+		
+		String url2 = "http://aluno.faesa.br/Default.aspx";
+		String retorno2 = RequestServer.requisitarDadosHttpGet(url2,novoCookie);
 		
 		
-		return null ;
+		String tagInit = "<span id=\"ctl00_lblNomeUsuario\">";
+		
+		String nome = retorno2.substring(retorno2.indexOf(tagInit)+tagInit.length(),retorno2.indexOf("</span>"));
+		estudante.setNome(nome);
+		estudante.getSessao().setCookie(novoCookie);
+		RespostaAutenticacao respostaAutenticacao = new RespostaAutenticacao();
+		respostaAutenticacao.setEstudante(estudante);
+		
+		int comparar = retorno2.indexOf("FAESA - Central do Aluno");
+		if(comparar > 0)
+		{
+			respostaAutenticacao.setAutenticado(true);
+			return respostaAutenticacao ;
+		}
+		else{
+			return null ;
+		}
+		
+		
 		
 	}
 	
@@ -122,6 +140,16 @@ public class ServiceFaesaOnline {
         resposta.setListMateria(listMateria);
         
         return resposta;
+	}
+	
+	public RespostaDadosCadastro dadosCadastroFaesaOnline(Estudante estudante) throws Exception{
+		
+		String url = "http://aluno.faesa.br/sistema/Cadastro/Default.aspx";
+		String buffer = RequestServer.requisitarDadosHttpGet(url, estudante.getSessao().getCookie());
+		DadosCadastro cadastro = ConvertHtmlToObject.DadosCadastro(buffer);
+		RespostaDadosCadastro resposta = new  RespostaDadosCadastro();
+		resposta.setDadosCadastro(cadastro);
+		return resposta;
 	}
 	
 	public void historicoEscolarFaesaOnline(Estudante estudante ){

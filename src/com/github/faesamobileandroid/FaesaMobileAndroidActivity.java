@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,7 @@ public class FaesaMobileAndroidActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.autenticacao);
 
-        controller = new ControllerPrincipal();
+        controller = new ControllerPrincipal(this,new Handler());
         controller.initSessao();
     
         Button button = (Button)findViewById(R.id.buttonEntrar);
@@ -30,7 +31,6 @@ public class FaesaMobileAndroidActivity extends Activity {
 			public void onClick(View v) {
 				EditText matriculaTextView = (EditText)findViewById(R.id.editText1);
 				EditText senhaTextView = (EditText)findViewById(R.id.editText2);
-				
 				controller.autenticacao(matriculaTextView.getText().toString(),senhaTextView.getText().toString());
 				
 			}

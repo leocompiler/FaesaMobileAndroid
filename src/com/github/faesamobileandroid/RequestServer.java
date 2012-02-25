@@ -11,12 +11,18 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.ProtocolException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.RedirectHandler;
+
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HttpContext;
+
+import com.github.faesamobileandroid.data.RespostaRequestPost;
 
  
 
@@ -24,13 +30,26 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class RequestServer {
 
-	public static String requisitarDadosHttpPost(String url, List<NameValuePair> _Atributos , String cookie){
-
-		
+	
+	public static RespostaRequestPost requisitarDadosHttpPost(String url, List<NameValuePair> _Atributos , String cookie){
+	
 		
 			try{
-		        HttpClient httpclient = new DefaultHttpClient();
+				DefaultHttpClient httpclient = new DefaultHttpClient();
+		        httpclient.setRedirectHandler(new RedirectHandler() {
+					
+					@Override
+					public boolean isRedirectRequested(HttpResponse response,HttpContext context) {
+						return false;
+					}
+					
+					@Override
+					public URI getLocationURI(HttpResponse response, HttpContext context)throws ProtocolException {
+						return null;
+					}
+				});
 		        HttpPost httppost = new HttpPost(url);
+		        
 		        httppost.setHeader("Cookie",cookie);
 		        httppost.setHeader("User-Agent", "Geocontrol Android");
 		        httppost.setEntity(new UrlEncodedFormEntity(_Atributos));
@@ -45,8 +64,14 @@ public class RequestServer {
 		            sb.append(NL);
 		        }
 		        in.close();
-		        String result = sb.toString();
-		        return result;
+		        RespostaRequestPost resposta = new RespostaRequestPost() ;
+		        
+		        Header  header = webResposta.getHeaders("Set-Cookie")[0];
+		        String stringCookie = header.getValue().replace(" path=/;", "");
+		        
+		        resposta.setRetornoHttpbuffer(sb.toString());
+		        resposta.setRetornoCookie(stringCookie);
+		        return resposta;
 		        
 		    }catch(Exception e)     
 		    {

@@ -2,11 +2,12 @@ package com.github.faesamobileandroid.data;
 
 public class Estudante {
 
-	private String matricula;
-	private String senha ;
-	private String nome ;
-	private String cursoAtual ;
-	private Sessao sessao ;
+	private String matricula ="";
+	private String senha ="";
+	private String nome ="";
+	private DadosCadastro cadastro ;
+	private String cursoAtual ="";
+	private Sessao sessao  ;
 	
 
 	public String getMatricula() {
@@ -47,6 +48,14 @@ public class Estudante {
 
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
+	}
+
+	public DadosCadastro getCadastro() {
+		return cadastro;
+	}
+
+	public void setCadastro(DadosCadastro cadastro) {
+		this.cadastro = cadastro;
 	}
 	
 }

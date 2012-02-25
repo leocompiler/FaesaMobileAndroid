@@ -2,14 +2,26 @@ package com.github.faesamobileandroid.data;
 
 public class RespostaAutenticacao {
 	
-	public Estudante estudante ;
+	private Estudante estudante ;
 	private boolean autenticado ;
-	public String log ;
+	private String log ;
 	public boolean isAutenticado() {
 		return autenticado;
 	}
 	public void setAutenticado(boolean autenticado) {
 		this.autenticado = autenticado;
+	}
+	public Estudante getEstudante() {
+		return estudante;
+	}
+	public void setEstudante(Estudante estudante) {
+		this.estudante = estudante;
+	}
+	public String getLog() {
+		return log;
+	}
+	public void setLog(String log) {
+		this.log = log;
 	}
 
 }

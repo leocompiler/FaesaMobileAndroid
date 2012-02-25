@@ -3,8 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-     android:gravity="center">
-
+	android:gravity="top"
+	android:background="#FFFFFF">
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#f1f1f1" 
+        >
+        
+            <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logocabecario" />
+    </LinearLayout>
     <ListView
         android:id="@+id/listmenuprincipal"
         android:layout_width="match_parent"
