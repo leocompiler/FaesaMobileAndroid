@@ -21,13 +21,13 @@ public class DadosCadastro extends Activity {
 	
 	public void setTelaDadosAluno(Estudante estudante){
 		EditText editDescricao = (EditText)findViewById(R.id.descricao);
-		String textDescricao = "Nome:"+estudante.getNome() ;
-		textDescricao += "\nEndereço:"+estudante.getCadastro().getEndereco() ;
-		textDescricao += "\nComplemento:"+estudante.getCadastro().getComplemento() ;
-		textDescricao += "\nBairro:"+estudante.getCadastro().getBairro();
-		textDescricao += "\nCidade:"+estudante.getCadastro().getCidade() ;
-		textDescricao += "\nEstado:"+estudante.getCadastro().getEstado() ;
-		textDescricao += "\nCEP:"+estudante.getCadastro().getCep();
+		String textDescricao ="Nome: "+estudante.getNome() ;
+		textDescricao += "\n\nEndereço: "+estudante.getCadastro().getEndereco() ;
+		textDescricao += "\n\nComplemento: "+estudante.getCadastro().getComplemento() ;
+		textDescricao += "\n\nBairro: "+estudante.getCadastro().getBairro();
+		textDescricao += "\n\nCidade: "+estudante.getCadastro().getCidade() ;
+		textDescricao += "\n\nEstado: "+estudante.getCadastro().getEstado() ;
+		textDescricao += "\n\nCEP: "+estudante.getCadastro().getCep();
 		
 		editDescricao.setText(textDescricao);
 	}

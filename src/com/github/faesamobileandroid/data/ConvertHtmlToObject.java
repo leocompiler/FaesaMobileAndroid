@@ -4,7 +4,18 @@ import java.util.List;
 
 public class ConvertHtmlToObject {
 	
+	private static String capturarString(String buffer ,String inicio , String fim ){
+		int start = buffer.indexOf(inicio);
+		String  tmp = buffer.substring(start+inicio.length());
+		int end = tmp.indexOf(fim); 
+		return tmp.substring(0,end);
+		
+	}
+	
 	public static List<Materia> convertMaterias(String buffer){
+		
+		
+		
 		return null;
 	}
 	
@@ -17,38 +28,37 @@ public class ConvertHtmlToObject {
 		String buffertmp3 = buffertmp2.replace("<font face=\"Arial\" color=\"Black\">","");
 		final String buffer = buffertmp3.replace("</font>", "");
 		 tagInit = "cula:</td><td>";
-		 tagEnd = "</td>" ;
-		 int indexInit = buffer.indexOf(tagInit);
-		 int indexEnd = buffer.indexOf(tagEnd);
-		String matricula = buffer.substring(indexInit,indexEnd);
+		 tagEnd = "</td>\n" ;
+ 		String matricula = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
 		
 		 tagInit = "Nome:</td><td>";
-		 tagEnd = "</td>" ;
-		String nome = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		 
+		String nome = capturarString(buffer,tagInit,tagEnd);
 
 		 tagInit = "Endere&#231;o:</td><td>";
-		 tagEnd = "</td>" ;
-		String endereco = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String endereco = capturarString(buffer,tagInit,tagEnd);
 		
 		 tagInit = "Complemento:</td><td>";
-		 tagEnd = "</td>" ;
-		String complemento = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String complemento = capturarString(buffer,tagInit,tagEnd);
 		
 		 tagInit = "Bairro:</td><td>";
-		 tagEnd = "</td>" ;
-		String bairro = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String bairro = capturarString(buffer,tagInit,tagEnd);
 
 		 tagInit = "Cidade:</td><td>";
-		 tagEnd = "</td>" ;
-		String cidade = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String cidade = capturarString(buffer,tagInit,tagEnd);
 		
 		 tagInit = "Estado:</td><td>";
-		 tagEnd = "</td>" ;
-		String estado = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String estado = capturarString(buffer,tagInit,tagEnd);
 		
 		 tagInit = "CEP:</td><td>";
-		 tagEnd = "</td>" ;
-		String cep = buffer.substring(buffer.indexOf(tagInit)+tagInit.length(),buffer.indexOf(tagEnd));
+		 tagEnd = "</td>\n" ;
+		String cep = capturarString(buffer,tagInit,tagEnd);
 		
 		DadosCadastro dadosCadastro = new DadosCadastro();
 		dadosCadastro.setBairro(bairro);
@@ -61,5 +71,5 @@ public class ConvertHtmlToObject {
 		return dadosCadastro ;
 	}
 	
-
+	
 }
