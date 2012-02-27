@@ -17,9 +17,9 @@ public final class R {
     public static final class id {
         public static final int buttonEntrar=0x7f050009;
         public static final int descricao=0x7f050004;
-        public static final int descricaoNotasFaltas=0x7f050005;
         public static final int editText1=0x7f050007;
         public static final int editText2=0x7f050008;
+        public static final int gridView1=0x7f050005;
         public static final int imageView1=0x7f050001;
         public static final int linearLayout1=0x7f050000;
         public static final int linearLayout2=0x7f050002;

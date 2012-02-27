@@ -9,9 +9,11 @@ import android.widget.Toast;
 import com.github.faesamobileandroid.data.Estudante;
 import com.github.faesamobileandroid.data.RespostaAutenticacao;
 import com.github.faesamobileandroid.data.RespostaDadosCadastro;
+import com.github.faesamobileandroid.data.RespostaMateriasNotasFaltas;
 import com.github.faesamobileandroid.data.ServiceFaesaOnline;
 import com.github.faesamobileandroid.data.Sessao;
 import com.github.faesamobileandroid.view.DadosCadastro;
+import com.github.faesamobileandroid.view.NotasFaltas;
 
 public class ControllerPrincipal {
 	
@@ -99,8 +101,17 @@ public class ControllerPrincipal {
 		});
 	}
 	
-	public void consultarNotasFaltas(Estudante estudante){
+	public void consultarNotasFaltas(){
+		try {
+			RespostaMateriasNotasFaltas resposta = service.materiasNotasFaltasFaesaOnline(estudante);
+			estudante.setListMaterias(resposta.getListMateria());
+			
+			NotasFaltas activityDadosCadastro = (NotasFaltas)context ;
+			activityDadosCadastro.setGridView(estudante);
 		
+		} catch (Exception e) {
+			exibirMessagem("Erro:\n"+e.toString());
+		}
 	}
 
 	public void consultarDadosAluno(){

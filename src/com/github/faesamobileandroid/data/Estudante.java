@@ -1,11 +1,14 @@
 package com.github.faesamobileandroid.data;
 
+import java.util.List;
+
 public class Estudante {
 
 	private String matricula ="";
 	private String senha ="";
 	private String nome ="";
 	private DadosCadastro cadastro ;
+	private List<Materia> listMaterias;
 	private String cursoAtual ="";
 	private Sessao sessao  ;
 	
@@ -56,6 +59,14 @@ public class Estudante {
 
 	public void setCadastro(DadosCadastro cadastro) {
 		this.cadastro = cadastro;
+	}
+
+	public List<Materia> getListMaterias() {
+		return listMaterias;
+	}
+
+	public void setListMaterias(List<Materia> listMaterias) {
+		this.listMaterias = listMaterias;
 	}
 	
 }

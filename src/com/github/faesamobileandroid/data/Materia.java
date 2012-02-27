@@ -9,7 +9,8 @@ public class Materia {
 	private int  quantFaltas ;
 	private int  quantFaltasOcorridas ;
 	private List<String> nota ;
-	public String getNome() {
+	private String situacao ;
+		public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
@@ -38,5 +39,11 @@ public class Materia {
 	}
 	public void setNota(List<String> nota) {
 		this.nota = nota;
+	}
+	public String getSituacao() {
+		return situacao;
+	}
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 }
