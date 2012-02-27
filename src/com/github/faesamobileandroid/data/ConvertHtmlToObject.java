@@ -13,7 +13,19 @@ public class ConvertHtmlToObject {
 	}
 	
 	public static List<Materia> convertMaterias(String buffer){
+		String tagInit ;
+		String tagEnd ;
 		
+		
+		tagInit = "<table cellspacing=\"1\"" ;
+		tagEnd = "</table>" ;
+		 
+		String bufferTableNotas = capturarString(buffer,tagInit,tagEnd);
+		
+		tagInit = "<td align=\"left\" valign=\"middle\" style=\"border-style:None;font-family:Arial,Helvetica,sans-serif;;font-size:12px;\">" ;
+		tagEnd = "</td>" ;
+		 
+		String materia = capturarString(buffer,tagInit,tagEnd);
 		
 		
 		return null;
