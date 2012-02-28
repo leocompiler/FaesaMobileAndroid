@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.w3c.dom.ls.LSInput;
 
 import com.github.faesamobileandroid.RequestServer;
 
@@ -103,8 +102,15 @@ public class ServiceFaesaOnline {
 		return resposta;
 	}
 	
-	public void historicoEscolarFaesaOnline(Estudante estudante ){
+	public RespostaHistoricoEscolar historicoEscolarFaesaOnline(Estudante estudante ) throws Exception{
+	
+		String url = "http://aluno.faesa.br/sistema/Historico/Default.aspx";
+		String buffer = RequestServer.requisitarDadosHttpGet(url, estudante.getSessao().getCookie());
+		String respostBuffer = ConvertHtmlToObject.convertHistoricoEscolar(buffer);
+		RespostaHistoricoEscolar resposta = new  RespostaHistoricoEscolar();
+		resposta.setBufferHtmlHistoricoEscolar(respostBuffer);
 		
+		return resposta ;
 	}
 	
 	public void boletosBancariosCursoFaesa(Estudante estudante){

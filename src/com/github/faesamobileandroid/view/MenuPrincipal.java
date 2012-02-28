@@ -53,7 +53,7 @@ public class MenuPrincipal extends Activity{
 			startActivity(new Intent(this, NotasFaltas.class));
 			break;
 		case 2:
-			startActivity(new Intent(this, DadosCadastro.class));
+			startActivity(new Intent(this, HistoricoEscolar.class));
 			break;
 		case 3:
 			startActivity(new Intent(this, DadosCadastro.class));

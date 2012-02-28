@@ -13,13 +13,13 @@ public class DadosCadastro extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.aluno_dados);
 		super.onCreate(savedInstanceState);
 		ControllerPrincipal controllerPrincipal = new ControllerPrincipal(this, new Handler());
 		controllerPrincipal.consultarDadosAluno();
 	}
 	
 	public void setTelaDadosAluno(Estudante estudante){
+		setContentView(R.layout.aluno_dados);
 		EditText editDescricao = (EditText)findViewById(R.id.descricao);
 		String textDescricao ="Nome: "+estudante.getNome() ;
 		textDescricao += "\n\nEndereço: "+estudante.getCadastro().getEndereco() ;

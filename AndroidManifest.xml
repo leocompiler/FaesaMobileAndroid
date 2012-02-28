@@ -23,7 +23,7 @@
          <activity android:label="@string/app_name" android:name=".view.MenuPrincipal"  android:screenOrientation="portrait"/>
          <activity android:label="@string/app_name" android:name=".view.DadosCadastro"  android:screenOrientation="portrait"/>
          <activity android:label="@string/app_name" android:name=".view.NotasFaltas"  android:screenOrientation="portrait"/>   
-		
+		 <activity android:label="@string/app_name" android:name=".view.HistoricoEscolar"  android:screenOrientation="portrait"/>
     </application>
     
 

@@ -16,6 +16,15 @@ public class ConvertHtmlToObject {
 		
 	}
 	
+	public static String convertHistoricoEscolar(String buffer){
+		
+		String tagInit = "<div id=\"ctl00_ContentPlaceHolder1_painelHistorico\">" ;
+		String tagEnd = "<!-- FIM - MIOLO-->" ;
+		 
+		String bufferTmp = capturarString(buffer,tagInit,tagEnd);
+		
+		return bufferTmp ;
+	}
 	
 	public static List<Materia> convertMaterias(String buffer){
 		String tagInit ;
@@ -60,7 +69,7 @@ public class ConvertHtmlToObject {
 		for(int i = 0;i<listMaterias.size();i++)
 		{
 			Materia materia = new Materia();
-			materia.setNome(listMaterias.get(i));
+			materia.setNome(listMaterias.get(i).trim());
 			
 			tagInit = "<td align=\"center\" valign=\"middle\"><font face=\"Arial,Helvetica,sans-serif;\">" ;
 			tagEnd = "</font></td>";			
