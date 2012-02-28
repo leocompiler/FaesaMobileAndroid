@@ -51,7 +51,6 @@ public class ControllerPrincipal {
 	
 	private void progressDialogDismiss(){
 		invokerWorksHandler(new Runnable() {
-			
 			@Override
 			public void run() {
 				progress.dismiss();	
@@ -59,12 +58,17 @@ public class ControllerPrincipal {
 		});
 	}
 	public void initSessao(){
-		try {
-			sessaoEstudante = service.sessionFaesaOnline();
-			estudante.setSessao(sessaoEstudante);
-		} catch (Exception e) {
-			exibirMessagem("Erro:\n"+e.toString());
-		}
+		invokerWorks(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						sessaoEstudante = service.sessionFaesaOnline();
+						estudante.setSessao(sessaoEstudante);
+					} catch (Exception e) {
+						exibirMessagem("Erro:\n"+e.toString());
+					}
+				}
+		});
 	}
 	public void autenticacao(final String matricula , final String senha ){
 		invokerWorks(new Runnable() {
