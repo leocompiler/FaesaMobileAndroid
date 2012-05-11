@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#ffffff">
+   android:background="#ffffff">
     
+    
+       
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
@@ -19,31 +21,10 @@
         android:layout_height="wrap_content"
         android:src="@drawable/logocabecario" />
     </LinearLayout>
-    
-    
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+
+    <WebView
+        android:id="@+id/webView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notas e Faltas:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#616161"
-            android:textStyle="bold" />
-
- 
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

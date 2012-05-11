@@ -9,10 +9,12 @@ import android.widget.Toast;
 import com.github.faesamobileandroid.data.Estudante;
 import com.github.faesamobileandroid.data.RespostaAutenticacao;
 import com.github.faesamobileandroid.data.RespostaDadosCadastro;
+import com.github.faesamobileandroid.data.RespostaHistoricoEscolar;
 import com.github.faesamobileandroid.data.RespostaMateriasNotasFaltas;
 import com.github.faesamobileandroid.data.ServiceFaesaOnline;
 import com.github.faesamobileandroid.data.Sessao;
 import com.github.faesamobileandroid.view.DadosCadastro;
+import com.github.faesamobileandroid.view.HistoricoEscolar;
 import com.github.faesamobileandroid.view.NotasFaltas;
 
 public class ControllerPrincipal {
@@ -106,29 +108,103 @@ public class ControllerPrincipal {
 	}
 	
 	public void consultarNotasFaltas(){
-		try {
-			RespostaMateriasNotasFaltas resposta = service.materiasNotasFaltasFaesaOnline(estudante);
-			estudante.setListMaterias(resposta.getListMateria());
-			
-			NotasFaltas activityDadosCadastro = (NotasFaltas)context ;
-			activityDadosCadastro.setGridView(estudante);
 		
-		} catch (Exception e) {
-			exibirMessagem("Erro:\n"+e.toString());
-		}
+		
+		invokerWorks(new Runnable() {
+			
+			@Override
+			public void run() {
+				progressDialogShow();
+				try {
+					RespostaMateriasNotasFaltas resposta = service.materiasNotasFaltasFaesaOnline(estudante);
+					estudante.setListMaterias(resposta.getListMateria());
+					invokerWorksHandler(new Runnable() {
+						
+						@Override
+						public void run() {
+							NotasFaltas activityDadosCadastro = (NotasFaltas)context ;
+							activityDadosCadastro.setGridView(estudante);		
+						}
+					});
+						
+			 
+				
+				} catch (Exception e) {
+					exibirMessagem("Erro:\n"+e.toString());
+					progressDialogShow();
+				}	
+				progressDialogDismiss();
+			}
+		});
+		
 	}
 
 	public void consultarDadosAluno(){
-		try {
-			RespostaDadosCadastro resposta = service.dadosCadastroFaesaOnline(estudante);
-			estudante.setCadastro(resposta.getDadosCadastro());
-			DadosCadastro activityDadosCadastro = (DadosCadastro)context ;
-			activityDadosCadastro.setTelaDadosAluno(estudante);
+		invokerWorks(new Runnable() {
+			
+			@Override
+			public void run() {
+				progressDialogShow();
+				try {
+					RespostaDadosCadastro resposta = service.dadosCadastroFaesaOnline(estudante);
+					estudante.setCadastro(resposta.getDadosCadastro());
+					invokerWorksHandler(new Runnable() {
+						
+						@Override
+						public void run() {
+							DadosCadastro activityDadosCadastro = (DadosCadastro)context ;
+							activityDadosCadastro.setTelaDadosAluno(estudante);	
+						}
+					});
+
+			
+				} catch (Exception e) {
+					exibirMessagem("Erro:\n"+e.toString());
+					progressDialogDismiss();
+				}
+				progressDialogDismiss();
+			}
+		});
 		
-		} catch (Exception e) {
-			exibirMessagem("Erro:\n"+e.toString());
-		}
+		
 	}
+	
+	public void consultarHistorico(){
+		invokerWorks(new Runnable() {
+					
+					@Override
+					public void run() {
+						progressDialogShow();
+						try {
+							invokerWorksHandler(new Runnable() {
+								
+								@Override
+								public void run() {
+									
+									try {
+										RespostaHistoricoEscolar resposta = service.historicoEscolarFaesaOnline(estudante);
+										HistoricoEscolar activityDadosCadastro = (HistoricoEscolar)context ;
+										activityDadosCadastro.setWebView(resposta.getBufferHtmlHistoricoEscolar());	
+									} catch (Exception e) {
+										exibirMessagem("Erro:\n"+e.toString());
+										progressDialogDismiss();
+									}
+									progressDialogDismiss();
+
+								}
+							});
+		
+					
+						} catch (Exception e) {
+							exibirMessagem("Erro:\n"+e.toString());
+							progressDialogDismiss();
+						}
+						progressDialogDismiss();
+					}
+		});
+				
+	}
+	
 	public void exibirMessagem(final String msg){
 		invokerWorksHandler(new Runnable() {
 			
